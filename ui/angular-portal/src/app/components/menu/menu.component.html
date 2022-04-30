@@ -1,0 +1,21 @@
+<nav role="navigation" class="w-nav-menu" *ngIf="!auth.data">
+  <a routerLink="/" class="nav-link w-nav-link">Főoldal</a>
+  <a routerLink="/about" class="nav-link w-nav-link">Játékról</a>
+  <a routerLink="login" class="nav-link w-nav-link">Bejelentkezés</a>
+</nav>
+
+<nav role="navigation" class="w-nav-menu" *ngIf="auth.data">
+
+  <a mat-button [matMenuTriggerFor]="aboveMenu">Hősök</a>
+  <mat-menu #aboveMenu="matMenu" yPosition="above">
+    <a mat-menu-item routerLink="/hero/new">Új</a>
+    <a mat-menu-item routerLink="/hero/list">Lista</a>
+  </mat-menu>
+  <span>&nbsp; &nbsp; </span>
+  <a mat-button [matMenuTriggerFor]="belowMenu">Birodalom</a>
+  <mat-menu #belowMenu="matMenu" yPosition="below">
+    <a mat-menu-item routerLink="/empire/new">Új</a>
+    <a mat-menu-item routerLink="/empire/list">Lista</a>
+  </mat-menu>
+
+</nav>

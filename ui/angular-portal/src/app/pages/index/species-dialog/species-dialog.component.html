@@ -1,0 +1,15 @@
+<h1 mat-dialog-title>Fajok</h1>
+<div mat-dialog-content>
+  <p>A Játékban elérhető fajok és képességeik!</p>
+</div>
+<mat-card *ngFor="let spec of species" style="margin: 3px">
+  <mat-card-header>
+    <mat-card-title>{{spec.name}}</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <div *ngFor="let env of spec.endowments">{{env.name}}({{env.brain}},{{env.power}},{{env.skill}})</div>
+  </mat-card-content>
+</mat-card>
+<div mat-dialog-actions>
+  <button mat-button (click)="onClose()">Bezár</button>
+</div>
