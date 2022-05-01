@@ -45,4 +45,7 @@ public class Empire {
     @OneToOne(cascade = CascadeType.ALL)
     private SecurityGuard protect;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    private Bard bard;
+
 }
