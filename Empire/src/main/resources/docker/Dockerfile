@@ -4,6 +4,6 @@ FROM openjdk:11-jdk-slim
 
 ADD ${project.artifactId}.jar /opt/app.jar
 
-EXPOSE 8090
+EXPOSE 8092
 
 ENTRYPOINT java $JAVA_OPTS -jar   /opt/app.jar 

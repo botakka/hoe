@@ -1,10 +1,7 @@
 package hu.oe.hoe.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.FieldNameConstants;
 
 import javax.persistence.*;
@@ -12,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 @Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Table(name = "bard")
 @Getter
 @Setter
@@ -28,8 +26,7 @@ public class Bard {
   @Column(name = "name")
   private String name;
 
-  @Transient
-  private Long empireid;
+  @Transient private Long empireid;
 
   @OneToOne(cascade = CascadeType.ALL)
   @JsonIgnore

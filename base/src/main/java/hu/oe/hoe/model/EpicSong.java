@@ -40,20 +40,23 @@ public class EpicSong {
   @NotEmpty
   private String attackerName;
 
-  @NotNull
-  @NotEmpty
-  private String winner; // attacker vagy protector
+  @NotNull @NotEmpty private String winner; // attacker vagy protector
 
   private String text;
+
   @ManyToOne
-  @JoinColumns({
-          @JoinColumn(name = "bardId", referencedColumnName = "id")
-  })
+  @JoinColumns({@JoinColumn(name = "bard_id", referencedColumnName = "id")})
   @JsonIgnore
   private Bard bard;
 
   @Builder
-  public EpicSong(Long id, Bard bard, String songName, String protectorName, String attackerName, String winner) {
+  public EpicSong(
+      Long id,
+      Bard bard,
+      String songName,
+      String protectorName,
+      String attackerName,
+      String winner) {
     this.id = id;
     this.bard = bard;
     this.songName = songName;

@@ -17,8 +17,8 @@ public interface EmpireRepository extends JpaRepository<Empire, Long> {
   public Empire findByIdAndUserid(@Param("id")long pId, @Param("userid")String pUserid);    
 
   @Query("select s from Empire s where s.name = :name and s.userid = :userid")
-  public Empire findByNameAndUserid(@Param("name")String pName, @Param("userid")String pUserid);    
-  
+  public Empire findByNameAndUserid(@Param("name")String pName, @Param("userid")String pUserid);
+
   @Modifying
   @org.springframework.transaction.annotation.Transactional
   @Query("UPDATE Empire s SET s.name = :name, s.description = :description WHERE s.id =:id and s.userid = :userid")

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.MessageFormat;
+import java.util.List;
 
 @Service
 public class SongService {
@@ -25,5 +26,9 @@ public class SongService {
         MessageFormat.format(epicSongName, song.getProtectorName(), song.getAttackerName()));
     repositorySong.save(song);
     return song;
+  }
+
+  public List<EpicSong> findContestSongs(List<Long> bardIds) {
+    return repositorySong.findByBardIdIn(bardIds);
   }
 }

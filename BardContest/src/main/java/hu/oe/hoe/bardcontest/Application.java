@@ -1,8 +1,8 @@
-package hu.oe.hoe.bards;
+package hu.oe.hoe.bardcontest;
 
 import hu.oe.hoe.base.OpenApiApplication;
-import hu.oe.hoe.model.Bard;
-import hu.oe.hoe.model.EpicSong;
+import hu.oe.hoe.model.BardContest;
+import hu.oe.hoe.model.Contender;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Contact;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -19,9 +19,9 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EnableAspectJAutoProxy
 @EnableCaching
 @SpringBootApplication
-@EntityScan(basePackageClasses = {Bard.class, EpicSong.class})
-@EnableJpaRepositories(basePackageClasses = {BardRepository.class})
-@ComponentScan(basePackageClasses = {BardResource.class})
+@EntityScan(basePackageClasses = {BardContest.class, Contender.class})
+@EnableJpaRepositories(basePackageClasses = {BardContestRepository.class})
+@ComponentScan(basePackageClasses = {BardContestResource.class})
 @OpenAPIDefinition(
     security = {
       @SecurityRequirement(
@@ -30,7 +30,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
     },
     info =
         @io.swagger.v3.oas.annotations.info.Info(
-            title = "Bards of Empires - Bards",
+            title = "BardContests of Empires - BardContests",
             version = "v1",
             description = "OE Microservice Project",
             license =

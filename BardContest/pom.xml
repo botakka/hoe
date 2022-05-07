@@ -6,7 +6,7 @@
         <artifactId>HOE</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-    <artifactId>Heroes</artifactId>
+    <artifactId>BardContest</artifactId>
     <packaging>jar</packaging>
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
@@ -188,7 +188,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>hu.oe.hoe.heroes.Application</mainClass>
+                            <mainClass>hu.oe.hoe.bardcontest.Application</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>

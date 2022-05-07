@@ -1,18 +1,20 @@
 package hu.oe.hoe.bards;
 
+import hu.oe.hoe.base.NotFoundException;
 import hu.oe.hoe.model.Bard;
 import hu.oe.hoe.model.EpicSong;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.RolesAllowed;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 @RestController
 @CrossOrigin("*")
@@ -33,13 +35,14 @@ public class BardResource {
       },
       responses = {
         @ApiResponse(responseCode = "200", description = "Sikeres művelet."),
-        @ApiResponse(responseCode = "403", description = "Hibás felvitel")
+        @ApiResponse(responseCode = "403", description = "Hibás felvitel"),
+        @ApiResponse(responseCode = "404", description = "Nem található")
       })
   @RolesAllowed("user")
   @PostMapping(produces = "application/json")
   public @ResponseBody Bard addBard(@RequestBody Bard pData) {
     repositoryBard.save(pData);
-    return repositoryBard.findById(pData.getId()).orElseThrow();
+    return repositoryBard.findById(pData.getId()).orElseThrow(NotFoundException::new);
   }
 
   @Operation(
@@ -111,22 +114,40 @@ public class BardResource {
     return true;
   }
 
-    @Operation(
-            description = "Egy hősi dal megrendelése.",
-            security = {
-                    @SecurityRequirement(
-                            name = "jwt-token",
-                            scopes = {"user"})
-            },
-            responses = {
-                    @ApiResponse(responseCode = "200", description = "Sikeres művelet."),
-                    @ApiResponse(responseCode = "403", description = "Hibás lekérdezés")
-            })
-    @RolesAllowed("user")
-    @PostMapping(path = "/song/{bardId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody EpicSong createSong(@PathVariable Long bardId, @RequestBody EpicSong pSong) {
-        Bard bard = repositoryBard.findById(bardId).orElseThrow();
-        return songService.createSong(bard,pSong);
-    }
+  @Operation(
+      description = "Egy hősi dal megrendelése.",
+      security = {
+        @SecurityRequirement(
+            name = "jwt-token",
+            scopes = {"user"})
+      },
+      responses = {
+        @ApiResponse(responseCode = "200", description = "Sikeres művelet."),
+        @ApiResponse(responseCode = "403", description = "Hibás lekérdezés"),
+        @ApiResponse(responseCode = "404", description = "Nem található")
+      })
+  @RolesAllowed("user")
+  @PostMapping(path = "/song/{bardId}", produces = MediaType.APPLICATION_JSON_VALUE)
+  public @ResponseBody EpicSong createSong(@PathVariable Long bardId, @RequestBody EpicSong pSong) {
+    Bard bard = repositoryBard.findById(bardId).orElseThrow(NotFoundException::new);
+    return songService.createSong(bard, pSong);
+  }
 
+  @Operation(
+      description = "A Verseny dalok lekérése",
+      security = {
+        @SecurityRequirement(
+            name = "jwt-token",
+            scopes = {"user"})
+      },
+      responses = {
+        @ApiResponse(responseCode = "200", description = "Sikeres művelet."),
+        @ApiResponse(responseCode = "403", description = "Hibás lekérdezés"),
+        @ApiResponse(responseCode = "404", description = "Nem található")
+      })
+  @RolesAllowed("user")
+  @GetMapping(path = "/contest/[{bardIds}]", produces = MediaType.APPLICATION_JSON_VALUE)
+  public @ResponseBody List<EpicSong> getSongs(@PathVariable Long[] bardIds) {
+    return songService.findContestSongs(Arrays.asList(bardIds));
+  }
 }
