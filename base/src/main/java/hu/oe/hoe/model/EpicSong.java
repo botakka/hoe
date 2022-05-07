@@ -1,12 +1,14 @@
 package hu.oe.hoe.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import jdk.jfr.BooleanFlag;
 import lombok.*;
 import lombok.experimental.FieldNameConstants;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.beans.Transient;
 
 @Entity
 @Table(name = "epicsong")
@@ -26,18 +28,23 @@ public class EpicSong {
   @NotEmpty
   private String songName;
 
-  @Column(name = "protectorId")
+  @Column(name = "protector")
   //    @ApiModelProperty("hős neve")
   @NotNull
   @NotEmpty
-  private Long protectorId;
+  private String protectorName;
 
-  @Column(name = "attackerId")
+  @Column(name = "attacker")
   //    @ApiModelProperty("hős neve")
   @NotNull
   @NotEmpty
-  private Long attackerId;
+  private String attackerName;
 
+  @NotNull
+  @NotEmpty
+  private String winner; // attacker vagy protector
+
+  private String text;
   @ManyToOne
   @JoinColumns({
           @JoinColumn(name = "bardId", referencedColumnName = "id")
@@ -46,11 +53,12 @@ public class EpicSong {
   private Bard bard;
 
   @Builder
-  public EpicSong(Long id, Bard bard, String songName, Long protectorId, Long attackerId) {
+  public EpicSong(Long id, Bard bard, String songName, String protectorName, String attackerName, String winner) {
     this.id = id;
     this.bard = bard;
     this.songName = songName;
-    this.protectorId = protectorId;
-    this.attackerId = attackerId;
+    this.protectorName = protectorName;
+    this.attackerName = attackerName;
+    this.winner = winner;
   }
 }

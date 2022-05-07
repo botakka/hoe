@@ -59,6 +59,13 @@ CREATE TABLE `empire` (
   `userid` varchar(255) COLLATE utf8_hungarian_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
 
+-- A tábla adatainak kiíratása `empire`
+--
+
+INSERT INTO `empire` (`id`, `description`, `name`, `userid`) VALUES
+(1, 'I. Birodalom'  , 'Botond realm', 'e299d013-7cda-4b01-ae24-17dee05fa399'),
+(2, 'II. Birodalom' , 'Peti realm'  , 'e299d013-7cda-4b01-ae24-17dee05fa400'),
+(3, 'III. Birodalom', 'Joco realm'  , 'e299d013-7cda-4b01-ae24-17dee05fa401');
 -- --------------------------------------------------------
 
 --
@@ -119,6 +126,12 @@ CREATE TABLE `securityguard` (
   `empire_id` bigint DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
 
+--
+-- A tábla adatainak kiíratása `securityguard`
+--
+
+INSERT INTO `securityguard` (`id`, `active`, `price`, `starttime`, `stoptime`, `empire_id`  ) VALUES
+(1, 1, 100, null, null, 1);
 -- --------------------------------------------------------
 
 --

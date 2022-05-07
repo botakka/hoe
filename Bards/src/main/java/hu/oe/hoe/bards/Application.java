@@ -1,8 +1,8 @@
 package hu.oe.hoe.bards;
 
 import hu.oe.hoe.base.OpenApiApplication;
-import hu.oe.hoe.model.Hero;
-import hu.oe.hoe.model.Hybrid;
+import hu.oe.hoe.model.Bard;
+import hu.oe.hoe.model.EpicSong;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Contact;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -19,8 +19,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EnableAspectJAutoProxy
 @EnableCaching
 @SpringBootApplication
-@EntityScan(basePackageClasses = {Hero.class, Hybrid.class})
-@EnableJpaRepositories(basePackageClasses = {BardRepository.class, HybridRepository.class})
+@EntityScan(basePackageClasses = {Bard.class, EpicSong.class})
+@EnableJpaRepositories(basePackageClasses = {BardRepository.class})
 @ComponentScan(basePackageClasses = {BardResource.class})
 @OpenAPIDefinition(
     security = {

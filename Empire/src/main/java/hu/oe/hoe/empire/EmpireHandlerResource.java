@@ -1,11 +1,7 @@
 package hu.oe.hoe.empire;
 
 import hu.oe.hoe.base.DataException;
-import hu.oe.hoe.model.Ability;
-import hu.oe.hoe.model.Empire;
-import hu.oe.hoe.model.Hero;
-import hu.oe.hoe.model.Hybrid;
-import hu.oe.hoe.model.SecurityGuard;
+import hu.oe.hoe.model.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -15,10 +11,11 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import javax.annotation.security.RolesAllowed;
-import javax.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -33,7 +30,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 
-
 @RestController
 @CrossOrigin("*")
 @RequestMapping(path = {"/empirehandler"}, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -43,10 +39,16 @@ public class EmpireHandlerResource{
 
     @Autowired
     private SecurityGuardRepository repositorySecurity;
-    
+
     @Value( "${service.hero}" )
     private String serviceHeroUrl;
-    
+
+    @Value( "${service.bard}" )
+    private String serviceBardUrl;
+
+    @Value( "${service.epicSong:false}" )
+    private Boolean epicSongServiceActive;
+
     @Operation(
         description = "Új birodalom felvitele.",
         security ={@SecurityRequirement(name = "jwt-token", scopes = {"user"})},
@@ -54,14 +56,14 @@ public class EmpireHandlerResource{
             @ApiResponse(responseCode = "200", description = "Sikeres művelet."),
             @ApiResponse(responseCode = "403", description = "Hibás felvitel")
         })
-    @RolesAllowed("user")    
+    @RolesAllowed("user")
     @PostMapping(produces = "application/json")
     public @ResponseBody Collection<Empire> addEmpire(Principal pSc, @RequestBody Empire pData){
         pData.setUserid(pSc.getName());
         repositoryEmpire.save(pData);
         return repositoryEmpire.findByUseridOrderNameAsc(pData.getUserid());
     }
-   
+
     @Operation(
         description = "Birodalom lista lekérdezése.",
         security ={@SecurityRequirement(name = "jwt-token", scopes = {"user"})},
@@ -81,7 +83,7 @@ public class EmpireHandlerResource{
             @ApiResponse(responseCode = "200", description = "Sikeres művelet."),
             @ApiResponse(responseCode = "403", description = "Hibás lekérdezés")
         })
-    @RolesAllowed("user")     
+    @RolesAllowed("user")
     @GetMapping(path="/getallmyempires", produces = "application/json")
     public @ResponseBody List<Empire> getAllMyEmpires(Principal principal){
         return repositoryEmpire.findByUseridOrderNameAsc(principal.getName());
@@ -94,7 +96,7 @@ public class EmpireHandlerResource{
             @ApiResponse(responseCode = "200", description = "Sikeres művelet."),
             @ApiResponse(responseCode = "403", description = "Hibás lekérdezés")
         })
-    @RolesAllowed("user") 
+    @RolesAllowed("user")
     @GetMapping(path ="/byname/{name}", produces = "application/json")
     public @ResponseBody Empire getEmpireByName(Principal principal, @PathVariable String name){
         return repositoryEmpire.findByNameAndUserid(name, principal.getName());
@@ -111,9 +113,9 @@ public class EmpireHandlerResource{
     public @ResponseBody Empire getEmpireById(@PathVariable(name = "id") Long pId){
         return repositoryEmpire.findById(pId).get();
     }
-    
+
      @Operation(
-        description = "Egy Birodalom lekérdezése.",
+        description = "Egy Birodalom törlése.",
         security ={@SecurityRequirement(name = "jwt-token", scopes = {"user"})},
         responses = {
             @ApiResponse(responseCode = "200", description = "Sikeres művelet."),
@@ -124,7 +126,7 @@ public class EmpireHandlerResource{
         repositoryEmpire.deleteById(pId);
         return true;
     }
-    
+
 
 
     @Operation(
@@ -134,7 +136,7 @@ public class EmpireHandlerResource{
             @ApiResponse(responseCode = "200", description = "Sikeres művelet."),
             @ApiResponse(responseCode = "404", description = "Nincs ilyen azonosítóju hős")
     })
-    @RolesAllowed("user") 
+    @RolesAllowed("user")
     @PostMapping(path ="/security", produces = "application/json")
     public @ResponseBody Empire setSecurityGuard(Principal pSc, @RequestBody SecurityGuard pData){
         String uri = "";
@@ -147,8 +149,8 @@ public class EmpireHandlerResource{
             return tmp;
         }
         throw new DataException();
-    } 
-  
+    }
+
     @Operation(
         description = "Egy Birodalom védelmének lekérdezése",
         security ={@SecurityRequirement(name = "jwt-token", scopes = {"user"})},
@@ -163,8 +165,8 @@ public class EmpireHandlerResource{
             return repositorySecurity.findByEmpireStarttimeStoptime(tmp, starttime, stoptime);
         }
         throw new DataException();
-    } 
-    
+    }
+
     @Operation(
         description = "Egy Birodalom megtámadása",
         security ={@SecurityRequirement(name = "jwt-token", scopes = {"user"})},
@@ -174,18 +176,37 @@ public class EmpireHandlerResource{
     })
     @GetMapping(path ="/attack/{empireid}/{heroid}", produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody boolean attack(Principal pSc, @PathVariable(name = "empireid") Long empireid, @PathVariable(name = "heroid") Long heroid){
-            String uri = serviceHeroUrl+"/hero/byid/"+heroid;
+            List<SecurityGuard> guards = repositorySecurity.findByEmpireId(empireid);
+            if (guards.isEmpty()){
+                return true;
+            }
+            String uri = serviceHeroUrl+"/hero/byid/"+guards.get(0).getHeroid();
             RestTemplate restTemplate = new RestTemplate();
             Hero protect = restTemplate.getForObject(uri, Hero.class);
-            
+
             uri = serviceHeroUrl+"/hero/byid/"+heroid;
-            Hero attact = restTemplate.getForObject(uri, Hero.class);
-            boolean res = getScore(attact)>getScore(protect); 
+            Hero attacker = restTemplate.getForObject(uri, Hero.class);
+            boolean res = getScore(attacker) > getScore(protect);
+            if (epicSongServiceActive){
+              Empire empire = repositoryEmpire.findById(empireid).orElseThrow();
+              if (empire.getBard() != null) {
+                EpicSong song = EpicSong.builder().
+                        attackerName(attacker.getName()).
+                        protectorName(protect.getName()).
+                        winner(res ? attacker.getName() : protect.getName()).
+                        build();
+                  String bardUri = serviceBardUrl+"/bard/song/" + empire.getBard().getId();
+                  HttpHeaders headers = new HttpHeaders();
+                  headers.setContentType(MediaType.APPLICATION_JSON);
+                  HttpEntity<EpicSong> httpEntity = new HttpEntity<>(song, headers);
+                  EpicSong epicSong = restTemplate.postForObject(bardUri, httpEntity, EpicSong.class);
+              }
+            }
             return res;
-            
-    } 
-     
- 
+
+    }
+
+
     private float getScore(Hero protect){
            float protScore = 0;
             Iterator<Hybrid> itHybrid = protect.getHybrid().iterator();
@@ -196,8 +217,8 @@ public class EmpireHandlerResource{
                     protScore+= hybrid.getPercent()*(abl.getPower()+abl.getBrain()+abl.getSkill());
                 }
             }
-     
+
             return protScore;
     }
-    
+
 }

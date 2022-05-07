@@ -28,10 +28,13 @@ public class Bard {
   @Column(name = "name")
   private String name;
 
+  @Transient
+  private Long empireid;
+
   @OneToOne(cascade = CascadeType.ALL)
   @JsonIgnore
   private Empire empire;
 
-  @OneToMany(mappedBy = "bard", cascade = CascadeType.REMOVE)
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "bard", cascade = CascadeType.REMOVE)
   private Collection<EpicSong> epicSongs = new ArrayList<>();
 }

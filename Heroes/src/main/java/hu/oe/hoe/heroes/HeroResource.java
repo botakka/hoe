@@ -84,8 +84,8 @@ public class HeroResource{
         })
     @RolesAllowed("user") 
     @GetMapping(path ="/byname/{name}", produces = "application/json")
-    public @ResponseBody Hero getheroByName(Principal principal, @PathVariable Long name){
-        return repositoryHero.findByIdAndUserid(name, principal.getName());
+    public @ResponseBody Hero getheroByName(Principal principal, @PathVariable String name){
+        return repositoryHero.findByNameAndUserid(name, principal.getName());
     }
 
     
