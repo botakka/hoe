@@ -1,0 +1,26 @@
+{
+  "realm" : "master",
+  "users" : [ {
+    "id" : "ab211f1a-83d9-4b71-8e36-4b48c94ced83",
+    "createdTimestamp" : 1652281937755,
+    "username" : "admin",
+    "enabled" : true,
+    "totp" : false,
+    "emailVerified" : false,
+    "credentials" : [ {
+      "id" : "4f731be7-2766-45fd-9ef0-38a1a7cf0fee",
+      "type" : "password",
+      "createdDate" : 1652541603624,
+      "secretData" : "{\"value\":\"XHK54fbmoq8g+fi97tnxjrxCwSZC78ma6hyRGIPHcvKwHhvpQyyxYSJN2rBgbWkBfusjURpoGXjFprxYSrwlGw==\",\"salt\":\"1jnaPRuCGccgdwGstgm1aA==\",\"additionalParameters\":{}}",
+      "credentialData" : "{\"hashIterations\":27500,\"algorithm\":\"pbkdf2-sha256\",\"additionalParameters\":{}}"
+    } ],
+    "disableableCredentialTypes" : [ ],
+    "requiredActions" : [ ],
+    "realmRoles" : [ "default-roles-master", "admin" ],
+    "clientRoles" : {
+      "hoe-realm" : [ "view-clients", "query-realms", "create-client", "manage-identity-providers", "view-authorization", "view-identity-providers", "manage-realm", "view-events", "query-users", "query-clients", "view-realm", "manage-users", "manage-clients", "manage-events", "view-users", "query-groups", "manage-authorization" ]
+    },
+    "notBefore" : 0,
+    "groups" : [ ]
+  } ]
+}

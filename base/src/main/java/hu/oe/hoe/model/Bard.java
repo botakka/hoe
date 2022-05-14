@@ -26,6 +26,10 @@ public class Bard {
   @Column(name = "name")
   private String name;
 
+  @JsonIgnore
+  @Column(name="userid")
+  private String userid;
+
   @Transient private Long empireid;
 
   @OneToOne(cascade = CascadeType.ALL)

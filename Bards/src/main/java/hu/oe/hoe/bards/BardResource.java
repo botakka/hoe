@@ -12,6 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.RolesAllowed;
+import java.security.Principal;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -40,7 +41,8 @@ public class BardResource {
       })
   @RolesAllowed("user")
   @PostMapping(produces = "application/json")
-  public @ResponseBody Bard addBard(@RequestBody Bard pData) {
+  public @ResponseBody Bard addBard(Principal pSc, @RequestBody Bard pData) {
+    pData.setUserid(pSc.getName());
     repositoryBard.save(pData);
     return repositoryBard.findById(pData.getId()).orElseThrow(NotFoundException::new);
   }

@@ -1,0 +1,88 @@
+{
+  "realm" : "hoe",
+  "users" : [ {
+    "id" : "5134448d-4bc2-4054-be9d-0991e2d2f1f5",
+    "createdTimestamp" : 1652362437186,
+    "username" : "user1",
+    "enabled" : true,
+    "totp" : false,
+    "emailVerified" : false,
+    "firstName" : "Botond",
+    "lastName" : "Baji",
+    "credentials" : [ {
+      "id" : "94461e6d-0f40-476f-8998-1ca487111245",
+      "type" : "password",
+      "createdDate" : 1652362469407,
+      "secretData" : "{\"value\":\"CUU0lXJz6i4oBLpiHGZPcFSg/wZKlrdrp70vHHLjsUn4VoUzF4GRXFobJZM0WjJNJh6ckKuzrVgC0sF4WAC/6A==\",\"salt\":\"5n49Bzq0qujtms60V8zc9A==\",\"additionalParameters\":{}}",
+      "credentialData" : "{\"hashIterations\":27500,\"algorithm\":\"pbkdf2-sha256\",\"additionalParameters\":{}}"
+    } ],
+    "disableableCredentialTypes" : [ ],
+    "requiredActions" : [ ],
+    "realmRoles" : [ "user", "default-roles-hoe" ],
+    "notBefore" : 0,
+    "groups" : [ ]
+  }, {
+    "id" : "3ea934dd-d8f8-4e87-975d-7bdbc376f927",
+    "createdTimestamp" : 1652528929072,
+    "username" : "user2",
+    "enabled" : true,
+    "totp" : false,
+    "emailVerified" : false,
+    "firstName" : "user2",
+    "lastName" : "Test",
+    "credentials" : [ {
+      "id" : "d30deae1-4cd8-4f2f-bc85-f087c60373eb",
+      "type" : "password",
+      "createdDate" : 1652529965898,
+      "secretData" : "{\"value\":\"Zq3VXKyhZcLSl1La8TSjdBeaw8pzXvUWB3TWGOlcZJ3AUQXANcsZCOKt7MvCC3+aA16zPTuN6BjzbxGdnDjRkw==\",\"salt\":\"BeM+gmKHZOQRyykqEb7IRw==\",\"additionalParameters\":{}}",
+      "credentialData" : "{\"hashIterations\":27500,\"algorithm\":\"pbkdf2-sha256\",\"additionalParameters\":{}}"
+    } ],
+    "disableableCredentialTypes" : [ ],
+    "requiredActions" : [ ],
+    "realmRoles" : [ "user", "default-roles-hoe" ],
+    "notBefore" : 0,
+    "groups" : [ ]
+  }, {
+    "id" : "f2608334-e466-4e7c-8806-af9714210edc",
+    "createdTimestamp" : 1652529314939,
+    "username" : "user3",
+    "enabled" : true,
+    "totp" : false,
+    "emailVerified" : false,
+    "firstName" : "user3",
+    "lastName" : "Test",
+    "credentials" : [ {
+      "id" : "f8535fc4-1543-4715-8fa5-62b80c65af38",
+      "type" : "password",
+      "createdDate" : 1652529979298,
+      "secretData" : "{\"value\":\"1JLioYrcIHkA5NwdLEao8K+RDf7NX0Pap4rL/gMYtX5aEev8imcsjHuoIjVxxcsg9SHKJCBTWoaAwuAFp0PK5w==\",\"salt\":\"pJPwkH2ljV7OtoE7fUIsDQ==\",\"additionalParameters\":{}}",
+      "credentialData" : "{\"hashIterations\":27500,\"algorithm\":\"pbkdf2-sha256\",\"additionalParameters\":{}}"
+    } ],
+    "disableableCredentialTypes" : [ ],
+    "requiredActions" : [ ],
+    "realmRoles" : [ "user", "default-roles-hoe" ],
+    "notBefore" : 0,
+    "groups" : [ ]
+  }, {
+    "id" : "86dc3484-ebec-4d17-863e-fad8bf8f96a2",
+    "createdTimestamp" : 1652529780432,
+    "username" : "user4",
+    "enabled" : true,
+    "totp" : false,
+    "emailVerified" : false,
+    "firstName" : "user4",
+    "lastName" : "Test",
+    "credentials" : [ {
+      "id" : "3221e9c2-7812-488c-9dc4-24f9b1274cc7",
+      "type" : "password",
+      "createdDate" : 1652529993118,
+      "secretData" : "{\"value\":\"X7ylhe0n5Dk1p5pg+OUzcFiyW0DlYaa3UImO3fqCLzpN63zZYcoBomjqQowiUBxiVs5CRI1XL+IfpuRr9eMwEg==\",\"salt\":\"K+tBaUDtmBbgcIh6Z3rAKQ==\",\"additionalParameters\":{}}",
+      "credentialData" : "{\"hashIterations\":27500,\"algorithm\":\"pbkdf2-sha256\",\"additionalParameters\":{}}"
+    } ],
+    "disableableCredentialTypes" : [ ],
+    "requiredActions" : [ ],
+    "realmRoles" : [ "user", "default-roles-hoe" ],
+    "notBefore" : 0,
+    "groups" : [ ]
+  } ]
+}

@@ -1,5 +1,5 @@
-FOR /f "tokens=*" %%i IN ('docker ps -q') DO docker stop %%i
-FOR /f "tokens=*" %%i IN ('docker ps -a -q') DO docker rm %%i
+::FOR /f "tokens=*" %%i IN ('docker ps -q') DO docker stop %%i
+::FOR /f "tokens=*" %%i IN ('docker ps -a -q') DO docker rm %%i
 docker rmi bards-image:1.0
 docker rmi bardcontest-image:1.0
 docker rmi heroes-image:1.0
@@ -16,7 +16,7 @@ docker push empire-image:1.0
 docker push bards-image:1.0
 docker push bardcontest-image:1.0
 docker run -d -p 8090:8090 speciesandendowments-image:1.0
-docker run -d -p 8091:8091 heroes-image:1.0 
-docker run -d -p 8092:8092 empire-image:1.0 --network="host
-docker run -d -p 8093:8093 bards-image:1.0 --network="host
-docker run -d -p 8094:8094 bardcontest-image:1.0 --network="host
+docker run -d -p 8091:8091 heroes-image:1.0
+docker run -d -p 8092:8092 empire-image:1.0
+docker run -d -p 8093:8093 bards-image:1.0
+docker run -d -p 8094:8094 bardcontest-image:1.0
